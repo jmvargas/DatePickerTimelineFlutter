@@ -40,7 +40,7 @@ class _MSDatePickerState extends State<MSDatePickerTimeline> {
     return Container(
       height: 80,
       child: ListView.builder(
-        itemCount: widget.endDate.difference(widget.startDate).inDays,
+        itemCount: widget.endDate.difference(widget.startDate).inDays + 1,
         controller: widget._scrollController,
         scrollDirection: Axis.horizontal,
         itemBuilder: (context, index) {
