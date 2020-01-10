@@ -13,6 +13,7 @@ class MSDatePickerTimeline extends StatefulWidget {
   final DateChangeListener onDateChange;
   final String locale;
   final DateTime startDate;
+  final DateTime endDate;
   final ScrollController _scrollController = new ScrollController();
 
   // Creates the DatePickerTimeline Widget
@@ -24,6 +25,7 @@ class MSDatePickerTimeline extends StatefulWidget {
     this.dateTextStyle = defaultDateTextStyle,
     this.selectionColor = AppColors.defaultSelectionColor,
     this.startDate,
+    this.endDate,
     this.onDateChange,
     this.locale,
   }) : super(key: key);
@@ -38,12 +40,13 @@ class _MSDatePickerState extends State<MSDatePickerTimeline> {
     return Container(
       height: 80,
       child: ListView.builder(
-        itemCount: 365,
+        itemCount: widget.endDate.difference(widget.startDate).inDays,
         controller: widget._scrollController,
         scrollDirection: Axis.horizontal,
         itemBuilder: (context, index) {
           // Return the Date Widget
-          DateTime _date = (widget.startDate ?? DateTime.now()).add(Duration(days: index));
+          DateTime _date =
+              (widget.startDate ?? DateTime.now()).add(Duration(days: index));
           DateTime date = new DateTime(_date.year, _date.month, _date.day);
           bool isSelected = compareDate(date, widget.currentDate);
 
@@ -59,7 +62,9 @@ class _MSDatePickerState extends State<MSDatePickerTimeline> {
               // A date is selected
               if (widget.onDateChange != null) {
                 widget.onDateChange(selectedDate);
-                final difference = selectedDate.difference((widget.startDate ?? DateTime.now())).inDays;
+                final difference = selectedDate
+                    .difference((widget.startDate ?? DateTime.now()))
+                    .inDays;
                 scrollToPosition(difference);
               }
               /*
@@ -79,7 +84,8 @@ class _MSDatePickerState extends State<MSDatePickerTimeline> {
         date1.month == date2.month &&
         date1.year == date2.year);
     if (isEquals) {
-      final difference = date1.difference((widget.startDate ?? DateTime.now())).inDays;
+      final difference =
+          date1.difference((widget.startDate ?? DateTime.now())).inDays;
       scrollToPosition(difference);
     }
 
@@ -87,6 +93,7 @@ class _MSDatePickerState extends State<MSDatePickerTimeline> {
   }
 
   void scrollToPosition(int position) {
-    widget._scrollController.animateTo(position * 62.0, duration: new Duration(seconds: 1), curve: Curves.ease);
+    widget._scrollController.animateTo(position * 62.0,
+        duration: new Duration(seconds: 1), curve: Curves.ease);
   }
 }
