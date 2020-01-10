@@ -96,7 +96,7 @@ class _MSDatePickerState extends State<MSDatePickerTimeline> {
 
   void scrollToPosition(int position) {
     var numberOfDays = widget.endDate.difference(widget.startDate).inDays + 1;
-    var rightLimit = numberOfDays - 5;
+    var rightLimit = numberOfDays - 6;
     if (position > rightLimit) position = rightLimit;
     print("position: " + position.toString());
     widget._scrollController.animateTo(position * 62.0,
