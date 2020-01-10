@@ -1,5 +1,6 @@
 library date_picker_timeline;
 
+import 'dart:async';
 import 'dart:math';
 
 import 'package:ms_date_picker_timeline/date_widget.dart';
@@ -40,6 +41,11 @@ class _MSDatePickerState extends State<MSDatePickerTimeline> {
   @override
   Widget build(BuildContext context) {
     var numberOfDays = widget.endDate.difference(widget.startDate).inDays + 1;
+    Timer(
+        Duration(milliseconds: 100),
+        () => scrollToPosition(widget.currentDate
+            .difference((widget.startDate ?? DateTime.now()))
+            .inDays));
     return Container(
       height: 80,
       child: ListView.builder(
@@ -87,12 +93,6 @@ class _MSDatePickerState extends State<MSDatePickerTimeline> {
     bool isEquals = (date1.day == date2.day &&
         date1.month == date2.month &&
         date1.year == date2.year);
-    if (isEquals) {
-      final difference =
-          date1.difference((widget.startDate ?? DateTime.now())).inDays;
-      scrollToPosition(difference);
-    }
-
     return isEquals;
   }
 
