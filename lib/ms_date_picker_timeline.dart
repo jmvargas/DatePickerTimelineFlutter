@@ -66,6 +66,7 @@ class _MSDatePickerState extends State<MSDatePickerTimeline> {
                 final difference = selectedDate
                     .difference((widget.startDate ?? DateTime.now()))
                     .inDays;
+                print(difference);
                 if (difference < numberOfDays - 5) scrollToPosition(difference);
               }
               /*
