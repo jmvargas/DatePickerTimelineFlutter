@@ -37,10 +37,11 @@ class MSDatePickerTimeline extends StatefulWidget {
 class _MSDatePickerState extends State<MSDatePickerTimeline> {
   @override
   Widget build(BuildContext context) {
+    var numberOfDays = widget.endDate.difference(widget.startDate).inDays + 1;
     return Container(
       height: 80,
       child: ListView.builder(
-        itemCount: widget.endDate.difference(widget.startDate).inDays + 1,
+        itemCount: numberOfDays,
         controller: widget._scrollController,
         scrollDirection: Axis.horizontal,
         itemBuilder: (context, index) {
@@ -65,7 +66,7 @@ class _MSDatePickerState extends State<MSDatePickerTimeline> {
                 final difference = selectedDate
                     .difference((widget.startDate ?? DateTime.now()))
                     .inDays;
-                scrollToPosition(difference);
+                if (difference < numberOfDays - 5) scrollToPosition(difference);
               }
               /*
               setState(() {
