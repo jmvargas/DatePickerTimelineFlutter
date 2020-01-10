@@ -67,9 +67,7 @@ class _MSDatePickerState extends State<MSDatePickerTimeline> {
                 final difference = selectedDate
                     .difference((widget.startDate ?? DateTime.now()))
                     .inDays;
-                final rightDifference =
-                    widget.endDate.difference(selectedDate).inDays + 1;
-                if (rightDifference < 5) scrollToPosition(difference);
+                scrollToPosition(difference);
               }
               /*
               setState(() {
@@ -97,7 +95,11 @@ class _MSDatePickerState extends State<MSDatePickerTimeline> {
   }
 
   void scrollToPosition(int position) {
-    widget._scrollController.animateTo(position * 62.0,
-        duration: new Duration(seconds: 1), curve: Curves.ease);
+    var numberOfDays = widget.endDate.difference(widget.startDate).inDays + 1;
+    final rightDifference = numberOfDays - position + 1;
+    print(rightDifference);
+    if (rightDifference < 5)
+      widget._scrollController.animateTo(position * 62.0,
+          duration: new Duration(seconds: 1), curve: Curves.ease);
   }
 }
